@@ -11,58 +11,66 @@ function main(config) {
         background: "#cccccc",
     });
 
-    d3.csv(config.dataFile, data => {
-        const edges = getCharacterEdges(data);
+    d3.csv(config.appearancesFile, appearances => {
+        d3.csv(config.charactersFile, characters => {
+            const edges = getCharacterEdges(appearances);
 
-        let count = 0;
-        const nodes = _(edges)
-            .map(row => row.characters)
-            .flatten()
-            .uniq()
-            .map(name => {
-                return {
-                    id: (count++),
-                    label: name,
-                    image: "img/" + name + ".png",
-                    shape: "image",
-                    //value: _.filter(edges, r => r.includes(name)).length,
-                    appearances: _(edges)
-                        .filter(r => r.characters.includes(name))
-                        .map(r => r.comic)
-                        .uniq()
-                        .value()
-                        .join(", "),
-                };
-            })
-            .value();
+            let count = 0;
+            const charactersTable = [];
+            const nodes = _(edges)
+                .map(row => row.characters)
+                .flatten()
+                .uniq()
+                .map(name => {
+                    charactersTable.push(
+                        _.filter(characters, r => r.Character === name)[0]
+                    );
 
-        const getId = (name) => _.filter(nodes, n => n.label === name)[0].id;
-        const edgeObjects = _(edges)
-            .uniqBy(row => "" + row.characters)
-            .map(row => {
-                return {
-                    from: getId(row.characters[0]),
-                    to: getId(row.characters[1]),
-                    value: _.filter(
-                        edges, r => _.isEqual(r.characters, row.characters)
-                    ).length,
-                };
-            })
-            .value();
+                    charactersTable[count].appearances =_(edges)
+                            .filter(r => r.characters.includes(name))
+                            .map(r => r.comic)
+                            .uniq()
+                            .value()
+                            .join(", ");
 
-        const container = document.getElementById(config.container);
-        const nodesAndEdges = {
-            nodes: new vis.DataSet(nodes),
-            edges: new vis.DataSet(edgeObjects),
-        };
-        const options = {};
-        const network = new vis.Network(container, nodesAndEdges, options);
+                    return {
+                        id: (count++),
+                        label: name,
+                        image: "img/" + name + ".png",
+                        shape: "image",
+                        //value: _.filter(edges, r => r.includes(name)).length,
+                    };
+                })
+                .value();
 
-        network.on("selectNode", info => {
-            const nodeId = info.nodes[0];
-            const node = nodes[nodeId];
+            const getId = (name) => _.filter(nodes, n => n.label === name)[0].id;
+            const edgeObjects = _(edges)
+                .uniqBy(row => "" + row.characters)
+                .map(row => {
+                    return {
+                        from: getId(row.characters[0]),
+                        to: getId(row.characters[1]),
+                        value: _.filter(
+                            edges, r => _.isEqual(r.characters, row.characters)
+                        ).length,
+                    };
+                })
+                .value();
 
-            displayCharacter(node, config.display)
+            const container = document.getElementById(config.container);
+            const nodesAndEdges = {
+                nodes: new vis.DataSet(nodes),
+                edges: new vis.DataSet(edgeObjects),
+            };
+            const options = {};
+            const network = new vis.Network(container, nodesAndEdges, options);
+
+            network.on("selectNode", info => {
+                const nodeId = info.nodes[0];
+                const character = charactersTable[nodeId];
+
+                displayCharacter(character, config.display)
+            });
         });
     });
 }
@@ -97,19 +105,27 @@ function getCharacterEdges(data) {
 function displayCharacter(character, displayId) {
     const display = $(displayId);
 
-    display.html(
-        "<h3 class=\"display-title\">" + character.label + "</h3>" +
-        "<img class=\"display-image\" src=\"" + character.image + "\">" +
-        "<table>" +
-        "<tr><td class=\"display-label\">Appearances</td><td>" + character.appearances + "</p></tr>" +
-        "</table>"
-    );
-
     console.log(character);
+
+    const alternateTitles = (character["Alternate Names / Appearances"] === "")
+        ? ""
+        : "<h4>Alternate Names / Appearances</h4>" +
+            character["Alternate Names / Appearances"].split(",").map(name =>
+                "<p>" + name + "</p><img class=\"display-image\" src=\"" +
+                "img/" + name + ".png" + "\">"
+            ).join("");
+
+    display.html(
+        "<h3 class=\"display-title\">" + character.Character + "</h3>" +
+        "<img class=\"display-image\" src=\"" + "img/" + character.Character + ".png" + "\">" +
+        "<h4>Appearances</h4>" + "<p>" + character.appearances + "</p>" +
+        alternateTitles
+    );
 }
 
 const config = {
-    dataFile: "Swords Comic - Appearances.csv",
+    appearancesFile: "Swords Comic - Appearances.csv",
+    charactersFile: "Swords Comic - Characters.csv",
     container: "characterGraph",
     display: "#display",
     height: $(document).height() - 20,
