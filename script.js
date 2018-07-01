@@ -15,14 +15,22 @@ function main(config) {
                     label: name,
                     image: "img/" + name + ".png",
                     shape: "image",
+                    value: _.filter(edges, r => r.includes(name)).length,
                 };
             })
             .value();
 
         const getId = (name) => _.filter(nodes, n => n.label === name)[0].id;
-        const edgeObjects = _.map(edges, row => {
-            return { from: getId(row[0]), to: getId(row[1]) };
-        });
+        const edgeObjects = _(edges)
+            .uniqBy(row => "" + row)
+            .map(row => {
+                return {
+                    from: getId(row[0]),
+                    to: getId(row[1]),
+                    value: _.filter(edges, r => _.isEqual(r, row)).length,
+                };
+            })
+            .value();
 
         const container = document.getElementById(config.container);
         const nodesAndEdges = {
