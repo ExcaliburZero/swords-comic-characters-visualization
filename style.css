@@ -10,3 +10,9 @@
 .display-image {
     width: 150px;
 }
+
+.display-label {
+    padding-right: 10px;
+    font-weight: bold;
+    vertical-align: top;
+}

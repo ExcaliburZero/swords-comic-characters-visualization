@@ -26,6 +26,12 @@ function main(config) {
                     image: "img/" + name + ".png",
                     shape: "image",
                     //value: _.filter(edges, r => r.includes(name)).length,
+                    appearances: _(edges)
+                        .filter(r => r.characters.includes(name))
+                        .map(r => r.comic)
+                        .uniq()
+                        .value()
+                        .join(", "),
                 };
             })
             .value();
@@ -93,7 +99,10 @@ function displayCharacter(character, displayId) {
 
     display.html(
         "<h3 class=\"display-title\">" + character.label + "</h3>" +
-        "<img class=\"display-image\" src=\"" + character.image + "\">"
+        "<img class=\"display-image\" src=\"" + character.image + "\">" +
+        "<table>" +
+        "<tr><td class=\"display-label\">Appearances</td><td>" + character.appearances + "</p></tr>" +
+        "</table>"
     );
 
     console.log(character);
