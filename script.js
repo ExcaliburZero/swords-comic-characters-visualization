@@ -91,7 +91,7 @@ function main(config) {
                             r.title = r.Character;
 
                             const alternateNames =
-                                r["Alternate Names / Appearances"].split(",");
+                                r["Alternate Names"].split(",");
 
                             if (alternateNames[0] !== "") {
                                 alternateNames.map(alt => {
@@ -113,11 +113,6 @@ function main(config) {
                             });
                         },
                     });
-
-
-
-                //$("#searchBarInput").on("click", () => {
-                //})
             });
         });
     });
@@ -164,10 +159,15 @@ function displayCharacter(character, comicsTable, displayId) {
         ).join(", ") +
         "</p>";
 
-    const alternateTitles = (character["Alternate Names / Appearances"] === "")
+    const alternates =
+        _.filter(character["Alternate Names"].split(","), r => r !== "").concat(
+            _.filter(character["Alternate Appearances"].split(","), r => r !== "")
+        );
+
+    const alternateTitles = (alternates.length === 0)
         ? ""
         : "<h4>Alternate Names / Appearances</h4>" +
-            character["Alternate Names / Appearances"].split(",").map(name =>
+            alternates.map(name =>
                 "<p>" + name + "</p><img class=\"display-image\" src=\"" +
                 "img/" + name + ".png" + "\">"
             ).join("");
