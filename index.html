@@ -23,9 +23,24 @@
   <!-- vis -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css">
+
+  <!-- Semantic UI -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.2/semantic.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.3.2/semantic.min.css">
 </head>
 
 <body>
+  <div id="searchBar">
+    <form class="ui form" onsubmit="return false;">
+      <div class="ui search">
+        <div class="ui icon input">
+            <input id="searchBarInput" class="prompt" placeholder="Search characters..." type="text">
+            <button type="submit"><i class="search icon"></i></button>
+        </div>
+        <div class="results"></div>
+      </div>
+    </form>
+  </div>
   <div id="display"></div>
   <div id="characterGraph"></div>
 

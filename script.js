@@ -27,6 +27,7 @@ function main(config) {
                             _.filter(characters, r => r.Character === name)[0]
                         );
 
+                        charactersTable[count].id = count;
                         charactersTable[count].appearances =_(edges)
                                 .filter(r => r.characters.includes(name))
                                 .map(r => r.comic)
@@ -63,7 +64,18 @@ function main(config) {
                     nodes: new vis.DataSet(nodes),
                     edges: new vis.DataSet(edgeObjects),
                 };
-                const options = {};
+                const options = {
+                    nodes: {
+                        borderWidth: 1,
+                        borderWidthSelected: 20,
+                        color: {
+                            border: "#2B7CE9",
+                        },
+                        shapeProperties: {
+                            useBorderWithImage: true,
+                        },
+                    },
+                };
                 const network = new vis.Network(container, nodesAndEdges, options);
 
                 network.on("selectNode", info => {
@@ -72,6 +84,40 @@ function main(config) {
 
                     displayCharacter(character, comicsTable, config.display)
                 });
+
+                $(".ui.search")
+                    .search({
+                        source: characters.map(r => {
+                            r.title = r.Character;
+
+                            const alternateNames =
+                                r["Alternate Names / Appearances"].split(",");
+
+                            if (alternateNames[0] !== "") {
+                                alternateNames.map(alt => {
+                                    r.title += " / " + alt
+                                });
+                            }
+
+                            return r;
+                        }),
+                        onSelect: (character) => {
+                            const nodeId = character.id;
+
+                            displayCharacter(character, comicsTable,
+                                config.display)
+
+                            network.setSelection({
+                                nodes: [nodeId],
+                                edges: [],
+                            });
+                        },
+                    });
+
+
+
+                //$("#searchBarInput").on("click", () => {
+                //})
             });
         });
     });
@@ -110,10 +156,6 @@ function getComicLink(comicsTable, comic) {
 
 function displayCharacter(character, comicsTable, displayId) {
     const display = $(displayId);
-
-    console.log(character);
-
-    console.log(comicsTable);
 
     const appearances = "<h4>Appearances</h4>" + "<p>" +
         character.appearances.split(",").map(comic =>

@@ -4,6 +4,7 @@
 
 #display {
     padding-left: 30px;
+    padding-top: 30px;
     z-index: 1;
 }
 
@@ -15,4 +16,8 @@
     padding-right: 10px;
     font-weight: bold;
     vertical-align: top;
+}
+
+#searchBar {
+    margin: 10px;
 }
