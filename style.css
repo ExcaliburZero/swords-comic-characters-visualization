@@ -1,0 +1,12 @@
+#characterGraph {
+    z-index: 0;
+}
+
+#display {
+    padding-left: 30px;
+    z-index: 1;
+}
+
+.display-image {
+    width: 150px;
+}
