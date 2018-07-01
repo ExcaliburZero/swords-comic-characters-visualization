@@ -13,63 +13,65 @@ function main(config) {
 
     d3.csv(config.appearancesFile, appearances => {
         d3.csv(config.charactersFile, characters => {
-            const edges = getCharacterEdges(appearances);
+            d3.csv(config.comicsFile, comicsTable => {
+                const edges = getCharacterEdges(appearances);
 
-            let count = 0;
-            const charactersTable = [];
-            const nodes = _(edges)
-                .map(row => row.characters)
-                .flatten()
-                .uniq()
-                .map(name => {
-                    charactersTable.push(
-                        _.filter(characters, r => r.Character === name)[0]
-                    );
+                let count = 0;
+                const charactersTable = [];
+                const nodes = _(edges)
+                    .map(row => row.characters)
+                    .flatten()
+                    .uniq()
+                    .map(name => {
+                        charactersTable.push(
+                            _.filter(characters, r => r.Character === name)[0]
+                        );
 
-                    charactersTable[count].appearances =_(edges)
-                            .filter(r => r.characters.includes(name))
-                            .map(r => r.comic)
-                            .uniq()
-                            .value()
-                            .join(", ");
+                        charactersTable[count].appearances =_(edges)
+                                .filter(r => r.characters.includes(name))
+                                .map(r => r.comic)
+                                .uniq()
+                                .value()
+                                .join(", ");
 
-                    return {
-                        id: (count++),
-                        label: name,
-                        image: "img/" + name + ".png",
-                        shape: "image",
-                        //value: _.filter(edges, r => r.includes(name)).length,
-                    };
-                })
-                .value();
+                        return {
+                            id: (count++),
+                            label: name,
+                            image: "img/" + name + ".png",
+                            shape: "image",
+                            //value: _.filter(edges, r => r.includes(name)).length,
+                        };
+                    })
+                    .value();
 
-            const getId = (name) => _.filter(nodes, n => n.label === name)[0].id;
-            const edgeObjects = _(edges)
-                .uniqBy(row => "" + row.characters)
-                .map(row => {
-                    return {
-                        from: getId(row.characters[0]),
-                        to: getId(row.characters[1]),
-                        value: _.filter(
-                            edges, r => _.isEqual(r.characters, row.characters)
-                        ).length,
-                    };
-                })
-                .value();
+                const getId = (name) => _.filter(nodes, n => n.label === name)[0].id;
+                const edgeObjects = _(edges)
+                    .uniqBy(row => "" + row.characters)
+                    .map(row => {
+                        return {
+                            from: getId(row.characters[0]),
+                            to: getId(row.characters[1]),
+                            value: _.filter(
+                                edges, r => _.isEqual(r.characters, row.characters)
+                            ).length,
+                        };
+                    })
+                    .value();
 
-            const container = document.getElementById(config.container);
-            const nodesAndEdges = {
-                nodes: new vis.DataSet(nodes),
-                edges: new vis.DataSet(edgeObjects),
-            };
-            const options = {};
-            const network = new vis.Network(container, nodesAndEdges, options);
+                const container = document.getElementById(config.container);
+                const nodesAndEdges = {
+                    nodes: new vis.DataSet(nodes),
+                    edges: new vis.DataSet(edgeObjects),
+                };
+                const options = {};
+                const network = new vis.Network(container, nodesAndEdges, options);
 
-            network.on("selectNode", info => {
-                const nodeId = info.nodes[0];
-                const character = charactersTable[nodeId];
+                network.on("selectNode", info => {
+                    const nodeId = info.nodes[0];
+                    const character = charactersTable[nodeId];
 
-                displayCharacter(character, config.display)
+                    displayCharacter(character, comicsTable, config.display)
+                });
             });
         });
     });
@@ -102,10 +104,23 @@ function getCharacterEdges(data) {
     return edges;
 }
 
-function displayCharacter(character, displayId) {
+function getComicLink(comicsTable, comic) {
+    return _.filter(comicsTable, c => c.Comic === comic)[0].Link;
+}
+
+function displayCharacter(character, comicsTable, displayId) {
     const display = $(displayId);
 
     console.log(character);
+
+    console.log(comicsTable);
+
+    const appearances = "<h4>Appearances</h4>" + "<p>" +
+        character.appearances.split(",").map(comic =>
+            "<a href=\""+ getComicLink(comicsTable, comic.trim()) + "\">" + comic.trim() +
+            "</a>"
+        ).join(", ") +
+        "</p>";
 
     const alternateTitles = (character["Alternate Names / Appearances"] === "")
         ? ""
@@ -118,7 +133,7 @@ function displayCharacter(character, displayId) {
     display.html(
         "<h3 class=\"display-title\">" + character.Character + "</h3>" +
         "<img class=\"display-image\" src=\"" + "img/" + character.Character + ".png" + "\">" +
-        "<h4>Appearances</h4>" + "<p>" + character.appearances + "</p>" +
+        appearances +
         alternateTitles
     );
 }
@@ -126,6 +141,7 @@ function displayCharacter(character, displayId) {
 const config = {
     appearancesFile: "Swords Comic - Appearances.csv",
     charactersFile: "Swords Comic - Characters.csv",
+    comicsFile: "Swords Comic - Comics.csv",
     container: "characterGraph",
     display: "#display",
     height: $(document).height() - 20,
