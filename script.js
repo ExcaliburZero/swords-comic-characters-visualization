@@ -126,6 +126,7 @@ function main(config) {
                     $(config.progressBar).css({
                         display: "none",
                     });
+                    network.setOptions( { physics: false } );
                 });
             });
         });

@@ -2,14 +2,14 @@ Character,Alternate Names,Alternate Appearances,Type,Image,# of Appearances,,
 Baker,,,Human,y,1,,Baker
 Red Head Guy,,,Human,y,8,,Red Head Guy
 Largest Breadsword,,,Sword,y,5,,Largest Breadsword
-Red King,The Apprentice,,Human,y,4,,Red King
+King Hilton,The Apprentice,,Human,y,6,,King Hilton
 The Master,,,Human,y,2,,The Master
-Stone Sword of the Red Pommel,,,Sword,y,7,,Stone Sword of the Red Pommel
+Stone Sword of the Red Pommel,Red Godsword,,Sword,y,9,,Stone Sword of the Red Pommel
 Small Red Wand of Lasers,,,Wand,y,4,,Small Red Wand of Lasers
-Xiphos,,,,y,9,,Xiphos
-Kargob,,Kargob (Imagined),God,,7,,Kargob
-Kargob's Blade,,,Sword,y,6,,Kargob's Blade
-Orange Haired Andventurer,,,Human,y,1,,Orange Haired Andventurer
+Xiphos,,,,y,10,,Xiphos
+Kargob,,Kargob (Imagined),God,y,7,,Kargob
+Kargob's Blade,,,Sword,y,7,,Kargob's Blade
+Orange Haired Andventurer,,,Human,y,2,,Orange Haired Andventurer
 Goblin,,,Goblin,y,4,,Goblin
 Demon King,,,,y,3,,Demon King
 Boredsword,,,Sword,y,1,,Boredsword
@@ -18,27 +18,27 @@ Two Headed Beasts,,,Human,y,1,,Two Headed Beasts
 Xiphos's Assistant,,,,y,2,,Xiphos's Assistant
 Red Knight's Sword,,,Sword,y,1,,Red Knight's Sword
 Purple Hair Adventurer,,,Human,y,3,,Purple Hair Adventurer
-Sword Giver,,Sword Giver (Old),Human,,5,,Sword Giver
+Sword Giver,,Sword Giver (Old),Human,y,5,,Sword Giver
 Plain Sword,,,Sword,y,2,,Plain Sword
-Sword Boy,,,Swordman,y,1,,Sword Boy
-Smith,Sword Boy's Dad,,Human,y,6,,Smith
+Merblade,Sword Boy,,Merblade,y,2,,Merblade
+Smith,Sword Boy's Dad,,Human,y,7,,Smith
 Swordfish,,,Swordfish,y,2,,Swordfish
 Sworddog,,,Sworddog,y,1,,Sworddog
-Sword Boy's Mom,,,Sword,,2,,Sword Boy's Mom
-Sir Harpe,Barbarian Girl,,Human,y,8,,Sir Harpe
+Sword Boy's Mom,,,Sword,y,2,,Sword Boy's Mom
+Sir Harpe,Barbarian Girl,,Human,y,9,,Sir Harpe
 Barbarian Mom,,,Human,y,1,,Barbarian Mom
 Barbarian Mom's Sword,,,Sword,y,1,,Barbarian Mom's Sword
 New King Boy,,,Human,y,1,,New King Boy
 Lady Sword Monster of the Lake,,,,y,5,,Lady Sword Monster of the Lake
-Lady Sword Monster of the Lake' Sword,,,Sword,y,9,,Lady Sword Monster of the Lake' Sword
+Lady Sword Monster of the Lake' Sword,,,Sword,y,10,,Lady Sword Monster of the Lake' Sword
 Great Sage,,,Human,y,2,,Great Sage
 Idiot,,,Human,y,1,,Idiot
 The World,,,Sword,y,1,,The World
 Soulsword,,,Sword,y,1,,Soulsword
-Zombie,,Zombie (Before),Human,,2,,Zombie
+Zombie,,Zombie (Before),Human,y,2,,Zombie
 Swordmaster,,,Human,y,2,,Swordmaster
 Dark Knight,,,Human,y,3,,Dark Knight
-Green Hair Adventurer,Light Knight,,Human,,3,,Green Hair Adventurer
+Green Hair Adventurer,Light Knight,,Human,y,3,,Green Hair Adventurer
 Green Hair Adventurer's Mind,,,Sword,y,1,,Green Hair Adventurer's Mind
 Dark Knight's Sword,,,Sword,y,1,,Dark Knight's Sword
 Dwarf,,,Dwarf,y,1,,Dwarf
@@ -49,11 +49,10 @@ Woman in Yellow,,,Human,y,3,,Woman in Yellow
 Woman in Yellow's Wife,,,Human,y,2,,Woman in Yellow's Wife
 Blade of Healing,,,Sword,y,1,,Blade of Healing
 Kargob Cultist,,,,y,1,,Kargob Cultist
-Merblade,,,Merblade,y,1,,Merblade
 Bad Fencer,,,Human,y,2,,Bad Fencer
 Bad Fencer Supporter,,,Human,y,1,,Bad Fencer Supporter
 Bad Fencer's Sword,,,Sword,y,1,,Bad Fencer's Sword
-Ōdachi,,,Human,y,2,,Ōdachi
+Ōdachi,,,Human,y,3,,Ōdachi
 Master of Chad,,,Human,y,1,,Master of Chad
 Weeping Explosion,,,Sword,y,1,,Weeping Explosion
 Chad,,,Sword,y,3,,Chad
@@ -61,10 +60,10 @@ Nice Pirate,,,Human,y,1,,Nice Pirate
 Nice Pirate's Blade,,,Sword,y,1,,Nice Pirate's Blade
 Archivist of the Longsword of Time,,,Human,y,2,,Archivist of the Longsword of Time
 Longsword of Time,,,Sword,y,1,,Longsword of Time
-Young Goblin,,,Goblin,y,2,,Young Goblin
-Demon Sword,,,Sword,y,2,,Demon Sword
+Young Goblin,Demon Goblin,,Goblin,y,3,,Young Goblin
+Demon Sword,,,Sword,y,3,,Demon Sword
 Samurai of the Great House,,,Human,y,1,,Samurai of the Great House
-Little Sword,,,Sword,y,0,,Ōdachi's Katana
+Ōdachi's Katana,Little Sword,,Sword,y,0,,Ōdachi's Katana
 Older Sword of the Great House,,,Sword,y,1,,Older Sword of the Great House
 Dark Knight's Rusty Sword,,,Sword,y,2,,Dark Knight's Rusty Sword
 Green Hair Adventurer's Sword of Light,,,Sword,y,2,,Green Hair Adventurer's Sword of Light
@@ -83,7 +82,7 @@ Claywaymore,,,Sword,y,1,,Claywaymore
 Claymost,,,Sword,y,1,,Claymost
 Blade of Entropy,,,Sword,y,1,,Blade of Entropy
 Mere,,,Human,y,2,,Mere
-Big Bird Monster,,,Bird Monster,y,1,,Big Bird Monster
+Big Bird Monster,,,Bird Monster,y,2,,Big Bird Monster
 Mere's Club,,,Club,y,2,,Mere's Club
 Sword Gifter Orc,,,Orc,y,1,,Sword Gifter Orc
 Grey Hair Kid,,,Human,y,1,,Grey Hair Kid
@@ -102,113 +101,108 @@ Chain-mail,,,,y,3,,Chain-mail
 Chad's Mother,,,,y,1,,Chad's Mother
 Chad's Father,,,,y,1,,Chad's Father
 Laser Sword Queen,,,,y,2,,Laser Sword Queen
-Ōdachi's Katana,Little Sword,,,,2,,Red Godsword
-Red Godsword,,,,y,1,,Yellow Godsword
-Yellow Godsword,,,,y,1,,Wielder of the Infinity Sword
-Wielder of the Infinity Sword,,,,y,2,,Infinity Sword
-Infinity Sword,,,,y,1,,Brother
-Brother,,,,,1,,Brother's Brother
-Brother's Brother,,,,y,1,,Yellow Hair Adventurer
-Yellow Hair Adventurer,,,,y,1,,Cool Sword Finder
-Cool Sword Finder,,,,y,1,,Brother's Sword
-Brother's Sword,,,,y,1,,Cool Sword
-Cool Sword,,,,y,1,,Yellow Paladin
-Yellow Paladin,,,,y,1,,Orc Customer Service Representative
-Orc Customer Service Representative,,,,y,1,,Purified Dead
-Purified Dead,,,,y,1,,Smartsword of Dead Purification
-Smartsword of Dead Purification,,,,y,1,,Orb of Customer Service
-Orb of Customer Service,,,,y,1,,Green Robed Woman
-Green Robed Woman,,,,y,2,,Rapier Tapir
-Rapier Tapir,,,,y,3,,Rapier Tapir's Rapier
-Rapier Tapir's Rapier,,,,y,2,,Kind Giant
-Kind Giant,,,,y,1,,Giant Horse
-Giant Horse,,,,y,1,,Lonley Guy
-Lonley Guy,,,,y,1,,Mind-Control Blade
-Mind-Control Blade,,,,y,1,,Young White Man
-Young White Man,,,,y,1,,Blue Old Man
-Blue Old Man,,,,y,1,,Purple Old Man
-Purple Old Man,,,,y,1,,Glaive the Adventurer
-Glaive the Adventurer,,,,y,3,,Orc Underling
-Orc Underling,,,,y,1,,Young White Man's Sword
-Young White Man's Sword,,,,y,1,,Glaive the Adventurer's Lance
-Glaive the Adventurer's Lance,,,,y,3,,Swordsheep
-Swordsheep,,,,y,1,,Sword Hydra
-Sword Hydra,,,,y,2,,Xiphos's Assistant's Sword
-Xiphos's Assistant's Sword,,,,y,1,,Orc Sage
-Orc Sage,,,,y,2,,Clayless Swordsmith
-Clayless Swordsmith,,,,y,2,,Spinner Sword
-Spinner Sword,,,,y,1,,Sword Suit
-Sword Suit,,,,y,1,,Whacking Sword
-Whacking Sword,,,,y,1,,Cursed Sword
-Cursed Sword,,,,y,1,,Even You 1
-Even You 1,,,,y,1,,Even You 2
-Even You 2,,,,y,1,,Even You 3
-Even You 3,,,,y,1,,Even You 4
-Even You 4,,,,y,1,,Laser Sword Queen's Servant
-Laser Sword Queen's Servant,,,,y,1,,Aliens
-Aliens,,,,y,1,,Laser Sword
-Laser Sword,,,,y,1,,Barbarian Son
-Barbarian Son,,,,y,1,,Barbarian Dad
-Barbarian Dad,,,,y,1,,Barbarian Son's Katana
-Barbarian Son's Katana,,,,y,1,,Barbarian Dad's Sword
-Barbarian Dad's Sword,,,,y,1,,Powerful Flamedge
-Powerful Flamedge,,,,y,1,,Heat Knight
-Heat Knight,,,,y,1,,Pirate Knave
-Pirate Knave,,,,y,1,,Pirate Knave's Sword
-Pirate Knave's Sword,,,,y,1,,Mysterious Ashes
-Mysterious Ashes,,,,y,1,,Automatic Sword
-Automatic Sword,,,,y,1,,Lady Sword Monster of the Lake's Armor
-Lady Sword Monster of the Lake's Armor,,,,y,2,,Ladies Man
-Ladies Man,,,,y,2,,+4 Damage
-+4 Damage,,,,,1,,+4 Dexterity
-+4 Dexterity,,,,,1,,+6 Damage
-+6 Damage,,,,,1,,Yellow Lonley Guy
-Yellow Lonley Guy,,,,y,1,,Sword of Unspeakable Darkness
-Sword of Unspeakable Darkness,,,,y,1,,Bug Sword
-Bug Sword,,,,y,1,,Dagger the Gnome
-Dagger the Gnome,,,,y,1,,Sword Ogre
-Sword Ogre,,,,y,1,,Yellow Hair Knight
-Yellow Hair Knight,,,,y,1,,Blade Salesman
-Blade Salesman,,,,y,1,,Blade of Solitude
-Blade of Solitude,,,,y,1,,Mimic Sword
-Mimic Sword,,,,y,1,,Swordfang Monster
-Swordfang Monster,,,,y,1,,Black Jacket Adventurer
-Black Jacket Adventurer,,,,y,1,,Black Jacket Adventurer's Sword
-Black Jacket Adventurer's Sword,,,,y,1,,Green Hero
-Green Hero,,,,y,1,,Heart Sword
-Heart Sword,,,,y,1,,Purple Evil Knight
-Purple Evil Knight,,,,y,1,,Purple Evil Knight's Sword
-Purple Evil Knight's Sword,,,,y,1,,Boastful Knight
-Boastful Knight,,,,y,1,,Darkslayer of Immortal Souls
-Darkslayer of Immortal Souls,,,,y,1,,Blue Hair Adventurer
-Blue Hair Adventurer,,,,y,1,,Hat Girl
-Hat Girl,,,,y,2,,Scree Sword
-Scree Sword,,,,y,1,,Scrr Sword
-Scrr Sword,,,,y,2,,Blue Hair Adventurer's Sword
-Blue Hair Adventurer's Sword,,,,y,1,,Captain Swordbeard
-Captain Swordbeard,,,,y,1,,Grimsword Island
-Grimsword Island,,,,y,1,,Sword of Truth
-Sword of Truth,,,,y,1,,Avoiding Adventurer
-Avoiding Adventurer,,,,y,1,,Sword Dog Salesman
-Sword Dog Salesman,,,,y,1,,Sharp Sharply
-Sharp Sharply,,,,y,1,,Sharp Sharply's Sword
-Sharp Sharply's Sword,,,,y,1,,Yellow God
-Yellow God,,,,y,1,,Birthday Adventurer
-Birthday Adventurer,,,,y,1,,Birthday Blade
-Birthday Blade,,,,y,1,,Green Hair Adventurer's Simple Sword
-Green Hair Adventurer's Simple Sword,,,,y,1,,Blue Young Goblin
-Blue Young Goblin,,,,y,1,,Grey Young Goblin
-Grey Young Goblin,,,,y,1,,Goblin's Dagger
-Goblin's Dagger,,,,y,1,,Sir Felton
-Sir Felton,,,,y,1,,Sir Felton's Announcer
-Sir Felton's Announcer,,,,y,1,,Bridge Knight
-Bridge Knight,,,,y,1,,Bridge Knight's Sword
-Bridge Knight's Sword,,,,y,1,,Rocketsword
-Rocketsword,,,,y,1,,Swordman
-Swordman,,,,y,1,,Swordboss
-Swordboss,,,,y,1,,Swordman's Wife
-Swordman's Wife,,,,y,1,,Swordman's Child
-Swordman's Child,,,,y,1,,
-,,,,,,,Necromancer
-,,,,,,,The Blade of Gulibility
-,,,,,,,Gulible Hero
+Yellow Godsword,,,,y,2,,Yellow Godsword
+Wielder of the Infinity Sword,,,,y,2,,Wielder of the Infinity Sword
+Infinity Sword,,,,y,1,,Infinity Sword
+Brother,,,,,1,,Brother
+Brother's Brother,,,,y,1,,Brother's Brother
+Yellow Hair Adventurer,,,,y,1,,Yellow Hair Adventurer
+Cool Sword Finder,,,,y,1,,Cool Sword Finder
+Brother's Sword,,,,y,1,,Brother's Sword
+Cool Sword,,,,y,1,,Cool Sword
+Yellow Paladin,,,,y,1,,Yellow Paladin
+Orc Customer Service Representative,,,,y,1,,Orc Customer Service Representative
+Purified Dead,,,,y,1,,Purified Dead
+Smartsword of Dead Purification,,,,y,1,,Smartsword of Dead Purification
+Orb of Customer Service,,,,y,1,,Orb of Customer Service
+Green Robed Woman,,,,y,2,,Green Robed Woman
+Rapier Tapir,,,,y,3,,Rapier Tapir
+Rapier Tapir's Rapier,,,,y,2,,Rapier Tapir's Rapier
+Kind Giant,,,,y,1,,Kind Giant
+Giant Horse,,,,y,1,,Giant Horse
+Lonley Guy,,,,y,1,,Lonley Guy
+Mind-Control Blade,,,,y,1,,Mind-Control Blade
+Young White Man,,,,y,1,,Young White Man
+Blue Old Man,,,,y,1,,Blue Old Man
+Purple Old Man,,,,y,1,,Purple Old Man
+Glaive the Adventurer,,,,y,3,,Glaive the Adventurer
+Orc Underling,,,,y,1,,Orc Underling
+Young White Man's Sword,,,,y,1,,Young White Man's Sword
+Glaive the Adventurer's Lance,,,,y,3,,Glaive the Adventurer's Lance
+Swordsheep,,,,y,1,,Swordsheep
+Sword Hydra,,,,y,2,,Sword Hydra
+Xiphos's Assistant's Sword,,,,y,1,,Xiphos's Assistant's Sword
+Orc Sage,,,,y,2,,Orc Sage
+Clayless Swordsmith,,,,y,2,,Clayless Swordsmith
+Spinner Sword,,,,y,1,,Spinner Sword
+Sword Suit,,,,y,1,,Sword Suit
+Whacking Sword,,,,y,1,,Whacking Sword
+Cursed Sword,,,,y,1,,Cursed Sword
+Even You 1,,,,y,1,,Even You 1
+Even You 2,,,,y,1,,Even You 2
+Even You 3,,,,y,1,,Even You 3
+Even You 4,,,,y,1,,Even You 4
+Laser Sword Queen's Servant,,,,y,1,,Laser Sword Queen's Servant
+Aliens,,,,y,1,,Aliens
+Laser Sword,,,,y,1,,Laser Sword
+Barbarian Son,,,,y,1,,Barbarian Son
+Barbarian Dad,,,,y,1,,Barbarian Dad
+Barbarian Son's Katana,,,,y,1,,Barbarian Son's Katana
+Barbarian Dad's Sword,,,,y,1,,Barbarian Dad's Sword
+Powerful Flamedge,,,,y,1,,Powerful Flamedge
+Heat Knight,,,,y,1,,Heat Knight
+Pirate Knave,,,,y,1,,Pirate Knave
+Pirate Knave's Sword,,,,y,1,,Pirate Knave's Sword
+Mysterious Ashes,,,,y,1,,Mysterious Ashes
+Automatic Sword,,,,y,1,,Automatic Sword
+Lady Sword Monster of the Lake's Armor,,,,y,3,,Lady Sword Monster of the Lake's Armor
+Ladies Man,,,,y,2,,Ladies Man
++4 Damage,,,,y,1,,+4 Damage
++4 Dexterity,,,,y,1,,+4 Dexterity
++6 Damage,,,,y,1,,+6 Damage
+Yellow Lonley Guy,,,,y,1,,Yellow Lonley Guy
+Sword of Unspeakable Darkness,,,,y,1,,Sword of Unspeakable Darkness
+Bug Sword,,,,y,1,,Bug Sword
+Dagger the Gnome,,,,y,1,,Dagger the Gnome
+Sword Ogre,,,,y,1,,Sword Ogre
+Yellow Hair Knight,,,,y,1,,Yellow Hair Knight
+Blade Salesman,,,,y,1,,Blade Salesman
+Blade of Solitude,,,,y,1,,Blade of Solitude
+Mimic Sword,,,,y,1,,Mimic Sword
+Swordfang Monster,,,,y,1,,Swordfang Monster
+Black Jacket Adventurer,,,,y,1,,Black Jacket Adventurer
+Black Jacket Adventurer's Sword,,,,y,1,,Black Jacket Adventurer's Sword
+Green Hero,,,,y,1,,Green Hero
+Heart Sword,,,,y,1,,Heart Sword
+Purple Evil Knight,,,,y,1,,Purple Evil Knight
+Purple Evil Knight's Sword,,,,y,1,,Purple Evil Knight's Sword
+Boastful Knight,,,,y,1,,Boastful Knight
+Darkslayer of Immortal Souls,,,,y,1,,Darkslayer of Immortal Souls
+Blue Hair Adventurer,,,,y,1,,Blue Hair Adventurer
+Hat Girl,,,,y,2,,Hat Girl
+Scree Sword,,,,y,1,,Scree Sword
+Scrr Sword,,,,y,2,,Scrr Sword
+Blue Hair Adventurer's Sword,,,,y,1,,Blue Hair Adventurer's Sword
+Captain Swordbeard,,,,y,1,,Captain Swordbeard
+Grimsword Island,,,,y,1,,Grimsword Island
+Sword of Truth,,,,y,1,,Sword of Truth
+Avoiding Adventurer,,,,y,1,,Avoiding Adventurer
+Sword Dog Salesman,,,,y,1,,Sword Dog Salesman
+Sharp Sharply,,,,y,1,,Sharp Sharply
+Sharp Sharply's Sword,,,,y,1,,Sharp Sharply's Sword
+Yellow God,,,,y,1,,Yellow God
+Birthday Adventurer,,,,y,1,,Birthday Adventurer
+Birthday Blade,,,,y,1,,Birthday Blade
+Green Hair Adventurer's Simple Sword,,,,y,1,,Green Hair Adventurer's Simple Sword
+Blue Young Goblin,,,,y,1,,Blue Young Goblin
+Grey Young Goblin,,,,y,1,,Grey Young Goblin
+Goblin's Dagger,,,,y,1,,Goblin's Dagger
+Sir Felton,,,,y,1,,Sir Felton
+Sir Felton's Announcer,,,,y,1,,Sir Felton's Announcer
+Bridge Knight,,,,y,1,,Bridge Knight
+Bridge Knight's Sword,,,,y,1,,Bridge Knight's Sword
+Rocketsword,,,,y,1,,Rocketsword
+Swordman,,,,y,1,,Swordman
+Swordboss,,,,y,1,,Swordboss
+Swordman's Wife,,,,y,1,,Swordman's Wife
+Swordman's Child,,,,y,1,,Swordman's Child
