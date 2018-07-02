@@ -2,9 +2,13 @@ function main(config) {
     $("#" + config.container).width(config.width - (config.displayWidth - 5));
     $("#" + config.container).height(config.height);
 
-    $(display).width(config.displayWidth);
-    $(display).height(config.height);
-    $(display).css({
+    $("#searchBar").width(config.width - (config.displayWidth + 50));
+
+    $(config.progressBar).text("Loading ... " + "0%");
+
+    $(config.display).width(config.displayWidth);
+    $(config.display).height(config.height);
+    $(config.display).css({
         position: "absolute",
         top: "0px",
         right: "0px",
@@ -113,6 +117,16 @@ function main(config) {
                             });
                         },
                     });
+
+                network.on("stabilizationProgress", function(params) {
+                    const percent = (params.iterations / params.total) * 100;
+                    $(config.progressBar).text("Loading ... " + ("" + percent).split(".")[0] + "%");
+                });
+                network.once("stabilizationIterationsDone", function() {
+                    $(config.progressBar).css({
+                        display: "none",
+                    });
+                });
             });
         });
     });
@@ -186,7 +200,8 @@ const config = {
     comicsFile: "Swords Comic - Comics.csv",
     container: "characterGraph",
     display: "#display",
-    height: $(document).height() - 20,
+    progressBar: "#progressBar",
+    height: $(document).height() - 40,
     width: $(document).width() - 20,
     displayWidth: 300,
 };

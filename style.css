@@ -20,4 +20,15 @@
 
 #searchBar {
     margin: 10px;
+    position: absolute;
+    z-index: 1;
+}
+
+#progressBar {
+    height: 200px;
+    width: 200px;
+    margin: 30px;
+    position: absolute;
+    top: -10px;
+    left: 250px;
 }
