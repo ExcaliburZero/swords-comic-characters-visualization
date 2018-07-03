@@ -79,6 +79,13 @@ function main(config) {
                             useBorderWithImage: true,
                         },
                     },
+                    physics: {
+                        stabilization: {
+                            enabled: true,
+                            iterations: 300,
+                            updateInterval: 10
+                        },
+                    },
                 };
                 const network = new vis.Network(container, nodesAndEdges, options);
 
