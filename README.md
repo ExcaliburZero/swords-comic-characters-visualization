@@ -1,6 +1,8 @@
 # swords-comic-characters-visualization
 This is a data visualization of characters from the [internet comic Swords](https://www.reddit.com/r/SwordsComic/). Each character is represted as a node in a graph and they are connected to other characters that they appeared in comics with. Additionally you can search for or click on a character to see more information about them. You can see the [visualization here](https://excaliburzero.github.io/swords-comic-characters-visualization/).
 
+![A screenshot of the visualization](screenshot.png)
+
 This visualization was developed using a mix of `vis.js`, `jQuery`, Semantic UI, and `d3`.
 
 Big thanks to Matthew Wills for making such an amazing comic!
