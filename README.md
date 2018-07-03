@@ -12,6 +12,11 @@ This data visualization is powered by 3 `.csv` files with information gathered o
 * `Swords Comic - Characters.csv` - This file contains information on all of the characters that have appeared in the comic. It includes their names (some guessed) and alternate names and appearances.
 * `Swords Comic - Comics.csv` - This file contains a list of all of the comics and links to images of them.
 
+## Contributing
+Did I get a character's name wrong? Was there a character in the background a comic that is really hard to find? Has a new comic come out?
+
+Feel free to make a pull request to make changes or fixes to the data. Any help is appreciated!
+
 ## Licensing
 All of the code for this data visualization is available under the MIT license.
 
