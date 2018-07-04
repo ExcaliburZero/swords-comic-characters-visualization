@@ -1,0 +1,24 @@
+{
+  "name": "swords-comic-characters-visualization",
+  "version": "1.0.0",
+  "description": "A data visualization of characters from the internet comic Swords.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint *.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ExcaliburZero/swords-comic-characters-visualization.git"
+  },
+  "author": "ExcaliburZero",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ExcaliburZero/swords-comic-characters-visualization/issues"
+  },
+  "homepage": "https://github.com/ExcaliburZero/swords-comic-characters-visualization#readme",
+  "devDependencies": {
+    "eslint": "^5.0.1",
+    "eslint-config-google": "^0.9.1"
+  }
+}

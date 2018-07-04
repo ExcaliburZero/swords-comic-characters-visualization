@@ -1,0 +1,11 @@
+{
+    "extends": "google",
+    "parserOptions": {
+        "ecmaVersion": 6
+    },
+    "rules": {
+        "quotes": ["error", "double"],
+        "arrow-parens": ["error", "as-needed"],
+        "object-curly-spacing": ["error", "always"]
+    }
+}

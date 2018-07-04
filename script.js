@@ -1,5 +1,10 @@
 "use strict";
 
+/**
+ * Creates the data visualization using the given configuration settings.
+ *
+ * @param {object} config - The configuration settings to use.
+ */
 function main(config) {
     $("#" + config.container).width(config.width - (config.displayWidth - 5));
     $("#" + config.container).height(config.height);
@@ -55,12 +60,13 @@ function main(config) {
                             label: name,
                             image: "img/" + name + ".png",
                             shape: "image",
-                            //value: _.filter(edges, r => r.includes(name)).length,
                         };
                     })
                     .value();
 
-                const getId = (name) => _.filter(nodes, n => n.label === name)[0].id;
+                const getId = name =>
+                    _.filter(nodes, n => n.label === name)[0].id;
+
                 const edgeObjects = _(edges)
                     .uniqBy(row => "" + row.characters)
                     .map(row => {
@@ -68,7 +74,8 @@ function main(config) {
                             from: getId(row.characters[0]),
                             to: getId(row.characters[1]),
                             value: _.filter(
-                                edges, r => _.isEqual(r.characters, row.characters)
+                                edges,
+                                r => _.isEqual(r.characters, row.characters)
                             ).length,
                         };
                     })
@@ -94,17 +101,19 @@ function main(config) {
                         stabilization: {
                             enabled: true,
                             iterations: 300,
-                            updateInterval: 10
+                            updateInterval: 10,
                         },
                     },
                 };
-                const network = new vis.Network(container, nodesAndEdges, options);
+                const network = new vis.Network(container, nodesAndEdges,
+                    options);
 
                 network.on("selectNode", info => {
                     const nodeId = info.nodes[0];
                     const character = charactersTable[nodeId];
 
-                    displayCharacter(edges, character, comicsTable, config.display)
+                    displayCharacter(edges, character, comicsTable,
+                        config.display);
                 });
 
                 $(".ui.search")
@@ -117,17 +126,17 @@ function main(config) {
 
                             if (alternateNames[0] !== "") {
                                 alternateNames.map(alt => {
-                                    r.title += " / " + alt
+                                    r.title += " / " + alt;
                                 });
                             }
 
                             return r;
                         }),
-                        onSelect: (character) => {
+                        onSelect: character => {
                             const nodeId = character.id;
 
                             displayCharacter(edges, character, comicsTable,
-                                config.display)
+                                config.display);
 
                             network.setSelection({
                                 nodes: [nodeId],
@@ -138,39 +147,53 @@ function main(config) {
 
                 network.on("stabilizationProgress", function(params) {
                     const percent = (params.iterations / params.total) * 100;
-                    $("#" + config.progressBar).text("Loading ... " + ("" + percent).split(".")[0] + "%");
+                    const percentInt = ("" + percent).split(".")[0];
+
+                    $("#" + config.progressBar)
+                        .text("Loading ... " + percentInt + "%");
                 });
                 network.once("stabilizationIterationsDone", function() {
                     $("#" + config.progressBar).css({
                         display: "none",
                     });
-                    network.setOptions( { physics: false } );
+                    network.setOptions({ physics: false });
                 });
             });
         });
     });
 }
 
+/**
+ * Returns a list of edges between characters that appeard in the same comic.
+ * Each edges is represented by an object containing the number of the comic
+ * and the list of the two characters (in alphabetical order).
+ *
+ * @param {array} data - The character appearance data to use for creating the
+ *     edges.
+ * @return {array} - A list of the character co-appearance edges.
+ */
 function getCharacterEdges(data) {
     const edges = [];
 
     const byComic = _.groupBy(data, row => row.Comic);
 
     for (const comic in byComic) {
-        const characters = byComic[comic];
+        if (byComic.hasOwnProperty(comic)) {
+            const characters = byComic[comic];
 
-        for(let i = 0; i < characters.length; i++) {
-            for(let j = i + 1; j < characters.length; j++)  {
-                const charA = characters[i].Character;
-                const charB = characters[j].Character;
+            for (let i = 0; i < characters.length; i++) {
+                for (let j = i + 1; j < characters.length; j++) {
+                    const charA = characters[i].Character;
+                    const charB = characters[j].Character;
 
-                // Sort them so that direction doesn't matter
-                const sorted = [charA, charB].sort();
+                    // Sort them so that direction doesn't matter
+                    const sorted = [charA, charB].sort();
 
-                edges.push({
-                    comic: comic,
-                    characters: sorted,
-                });
+                    edges.push({
+                        comic: comic,
+                        characters: sorted,
+                    });
+                }
             }
         }
     }
@@ -178,17 +201,33 @@ function getCharacterEdges(data) {
     return edges;
 }
 
+/**
+ * Returns the link to the specified comic using the given comic info table.
+ *
+ * @param {array} comicsTable - An array with information on the different
+ *     comics.
+ * @param {string} comic - The comic to get the link to.
+ * @return {string} - The url to the specified comic.
+ */
 function getComicLink(comicsTable, comic) {
     return _.filter(comicsTable, c => c.Comic === comic)[0].Link;
 }
 
+/**
+ * Displays information on the specified character in the given display.
+ *
+ * @param {array} edges - The character co-appearance information.
+ * @param {object} character - The character to display information about.
+ * @param {array} comicsTable - The information on the different comics.
+ * @param {string} displayId - The id of the display to put the information in.
+ */
 function displayCharacter(edges, character, comicsTable, displayId) {
     const display = $("#" + displayId + "Contents");
 
     const appearances = "<h4>Appearances</h4>" + "<p>" +
         character.appearances.split(",").map(comic =>
-            "<a href=\""+ getComicLink(comicsTable, comic.trim()) + "\">" + comic.trim() +
-            "</a>"
+            "<a href=\""+ getComicLink(comicsTable, comic.trim()) + "\">" +
+            comic.trim() + "</a>"
         ).join(", ") +
         "</p>";
 
@@ -213,7 +252,7 @@ function displayCharacter(edges, character, comicsTable, displayId) {
                 comics: e.map(a => a.comic),
                 occurances: e.length,
                 negOccurances: -e.length,
-            }
+            };
         })
         .sortBy(["negOccurances", "character"])
         .value();
@@ -223,11 +262,14 @@ function displayCharacter(edges, character, comicsTable, displayId) {
             "<p>" + e.character + " (" + e.comics.map(c =>
                 "<a href=\""+ getComicLink(comicsTable, c) + "\">" + c + "</a>"
             ).join(", ") + ")" + "</p>"
-        ).join("")
+        ).join("");
 
     const alternates =
         _.filter(character["Alternate Names"].split(","), r => r !== "").concat(
-            _.filter(character["Alternate Appearances"].split(","), r => r !== "")
+            _.filter(
+                character["Alternate Appearances"].split(","),
+                r => r !== ""
+            )
         );
 
     const alternateTitles = (alternates.length === 0)
@@ -240,7 +282,8 @@ function displayCharacter(edges, character, comicsTable, displayId) {
 
     display.html(
         "<h3 class=\"display-title\">" + character.Character + "</h3>" +
-        "<img class=\"display-image\" src=\"" + "img/" + character.Character + ".png" + "\">" +
+        "<img class=\"display-image\" src=\"" +
+        "img/" + character.Character + ".png" + "\">" +
         appearances +
         alternateTitles +
         appearedWith
