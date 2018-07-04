@@ -1,18 +1,29 @@
+"use strict";
+
 function main(config) {
     $("#" + config.container).width(config.width - (config.displayWidth - 5));
     $("#" + config.container).height(config.height);
 
     $("#searchBar").width(config.width - (config.displayWidth + 50));
 
-    $(config.progressBar).text("Loading ... " + "0%");
+    $("#" + config.progressBar).text("Loading ... " + "0%");
 
-    $(config.display).width(config.displayWidth);
-    $(config.display).height(config.height);
-    $(config.display).css({
+    $("#" + config.display).width(config.displayWidth);
+    $("#" + config.display).height(config.height);
+    $("#" + config.display).css({
         position: "absolute",
         top: "0px",
         right: "0px",
         background: "#cccccc",
+    });
+    $("#" + config.display)
+        .append("<div id=\"" + config.display + "Contents\"></div>");
+
+    $("#" + config.display + "Contents").width(config.displayWidth - 20);
+    $("#" + config.display + "Contents").height(config.height - 20);
+    $("#" + config.display + "Contents").css({
+        "overflow-y": "auto",
+        "overflow-x": "hidden",
     });
 
     d3.csv(config.appearancesFile, appearances => {
@@ -93,7 +104,7 @@ function main(config) {
                     const nodeId = info.nodes[0];
                     const character = charactersTable[nodeId];
 
-                    displayCharacter(character, comicsTable, config.display)
+                    displayCharacter(edges, character, comicsTable, config.display)
                 });
 
                 $(".ui.search")
@@ -115,7 +126,7 @@ function main(config) {
                         onSelect: (character) => {
                             const nodeId = character.id;
 
-                            displayCharacter(character, comicsTable,
+                            displayCharacter(edges, character, comicsTable,
                                 config.display)
 
                             network.setSelection({
@@ -127,10 +138,10 @@ function main(config) {
 
                 network.on("stabilizationProgress", function(params) {
                     const percent = (params.iterations / params.total) * 100;
-                    $(config.progressBar).text("Loading ... " + ("" + percent).split(".")[0] + "%");
+                    $("#" + config.progressBar).text("Loading ... " + ("" + percent).split(".")[0] + "%");
                 });
                 network.once("stabilizationIterationsDone", function() {
-                    $(config.progressBar).css({
+                    $("#" + config.progressBar).css({
                         display: "none",
                     });
                     network.setOptions( { physics: false } );
@@ -171,8 +182,8 @@ function getComicLink(comicsTable, comic) {
     return _.filter(comicsTable, c => c.Comic === comic)[0].Link;
 }
 
-function displayCharacter(character, comicsTable, displayId) {
-    const display = $(displayId);
+function displayCharacter(edges, character, comicsTable, displayId) {
+    const display = $("#" + displayId + "Contents");
 
     const appearances = "<h4>Appearances</h4>" + "<p>" +
         character.appearances.split(",").map(comic =>
@@ -180,6 +191,39 @@ function displayCharacter(character, comicsTable, displayId) {
             "</a>"
         ).join(", ") +
         "</p>";
+
+    console.log(edges);
+
+    const costars = _(edges)
+        .filter(e => e.characters.includes(character.Character))
+        .map(e => {
+            const chars = e.characters;
+            const name = (chars[0] === character.Character)
+                ? chars[1] : chars[0];
+
+            return {
+                character: name,
+                comic: e.comic,
+            };
+        })
+        .groupBy(e => e.character)
+        .map(e => {
+            return {
+                character: e[0].character,
+                comics: e.map(a => a.comic),
+                occurances: e.length,
+                negOccurances: -e.length,
+            }
+        })
+        .sortBy(["negOccurances", "character"])
+        .value();
+
+    const appearedWith = "<h4>Appeared With</h4>" +
+        costars.map(e =>
+            "<p>" + e.character + " (" + e.comics.map(c =>
+                "<a href=\""+ getComicLink(comicsTable, c) + "\">" + c + "</a>"
+            ).join(", ") + ")" + "</p>"
+        ).join("")
 
     const alternates =
         _.filter(character["Alternate Names"].split(","), r => r !== "").concat(
@@ -198,7 +242,8 @@ function displayCharacter(character, comicsTable, displayId) {
         "<h3 class=\"display-title\">" + character.Character + "</h3>" +
         "<img class=\"display-image\" src=\"" + "img/" + character.Character + ".png" + "\">" +
         appearances +
-        alternateTitles
+        alternateTitles +
+        appearedWith
     );
 }
 
@@ -207,8 +252,8 @@ const config = {
     charactersFile: "Swords Comic - Characters.csv",
     comicsFile: "Swords Comic - Comics.csv",
     container: "characterGraph",
-    display: "#display",
-    progressBar: "#progressBar",
+    display: "display",
+    progressBar: "progressBar",
     height: $(document).height() - 40,
     width: $(document).width() - 20,
     displayWidth: 300,
