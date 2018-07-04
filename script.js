@@ -6,80 +6,15 @@
  * @param {object} config - The configuration settings to use.
  */
 function main(config) {
-    $("#" + config.container).width(config.width - (config.displayWidth - 5));
-    $("#" + config.container).height(config.height);
-
-    $("#searchBar").width(config.width - (config.displayWidth + 50));
-
-    $("#" + config.progressBar).text("Loading ... " + "0%");
-
-    $("#" + config.display).width(config.displayWidth);
-    $("#" + config.display).height(config.height);
-    $("#" + config.display).css({
-        position: "absolute",
-        top: "0px",
-        right: "0px",
-        background: "#cccccc",
-    });
-    $("#" + config.display)
-        .append("<div id=\"" + config.display + "Contents\"></div>");
-
-    $("#" + config.display + "Contents").width(config.displayWidth - 20);
-    $("#" + config.display + "Contents").height(config.height - 20);
-    $("#" + config.display + "Contents").css({
-        "overflow-y": "auto",
-        "overflow-x": "hidden",
-    });
+    setupVisualizationStructure(config);
 
     d3.csv(config.appearancesFile, appearances => {
         d3.csv(config.charactersFile, characters => {
             d3.csv(config.comicsFile, comicsTable => {
                 const edges = getCharacterEdges(appearances);
 
-                let count = 0;
-                const charactersTable = [];
-                const nodes = _(edges)
-                    .map(row => row.characters)
-                    .flatten()
-                    .uniq()
-                    .map(name => {
-                        charactersTable.push(
-                            _.filter(characters, r => r.Character === name)[0]
-                        );
-
-                        charactersTable[count].id = count;
-                        charactersTable[count].appearances =_(edges)
-                                .filter(r => r.characters.includes(name))
-                                .map(r => r.comic)
-                                .uniq()
-                                .value()
-                                .join(", ");
-
-                        return {
-                            id: (count++),
-                            label: name,
-                            image: "img/" + name + ".png",
-                            shape: "image",
-                        };
-                    })
-                    .value();
-
-                const getId = name =>
-                    _.filter(nodes, n => n.label === name)[0].id;
-
-                const edgeObjects = _(edges)
-                    .uniqBy(row => "" + row.characters)
-                    .map(row => {
-                        return {
-                            from: getId(row.characters[0]),
-                            to: getId(row.characters[1]),
-                            value: _.filter(
-                                edges,
-                                r => _.isEqual(r.characters, row.characters)
-                            ).length,
-                        };
-                    })
-                    .value();
+                const { charactersTable, nodes, edgeObjects } =
+                    getNodesAndEdges(characters, edges);
 
                 const container = document.getElementById(config.container);
                 const nodesAndEdges = {
@@ -116,34 +51,6 @@ function main(config) {
                         config.display);
                 });
 
-                $(".ui.search")
-                    .search({
-                        source: characters.map(r => {
-                            r.title = r.Character;
-
-                            const alternateNames =
-                                r["Alternate Names"].split(",");
-
-                            if (alternateNames[0] !== "") {
-                                alternateNames.map(alt => {
-                                    r.title += " / " + alt;
-                                });
-                            }
-
-                            return r;
-                        }),
-                        onSelect: character => {
-                            const nodeId = character.id;
-
-                            displayCharacter(edges, character, comicsTable,
-                                config.display);
-
-                            network.setSelection({
-                                nodes: [nodeId],
-                                edges: [],
-                            });
-                        },
-                    });
 
                 network.on("stabilizationProgress", function(params) {
                     const percent = (params.iterations / params.total) * 100;
@@ -158,8 +65,42 @@ function main(config) {
                     });
                     network.setOptions({ physics: false });
                 });
+
+                activateSearchBar(config, characters, edges, comicsTable);
             });
         });
+    });
+}
+
+/**
+ * Sets up the properties of the visualization elements.
+ *
+ * @param {object} config - The configuration settings to use.
+ */
+function setupVisualizationStructure(config) {
+    $("#" + config.container).width(config.width - (config.displayWidth - 5));
+    $("#" + config.container).height(config.height);
+
+    $("#searchBar").width(config.width - (config.displayWidth + 50));
+
+    $("#" + config.progressBar).text("Loading ... " + "0%");
+
+    $("#" + config.display).width(config.displayWidth);
+    $("#" + config.display).height(config.height);
+    $("#" + config.display).css({
+        position: "absolute",
+        top: "0px",
+        right: "0px",
+        background: "#cccccc",
+    });
+    $("#" + config.display)
+        .append("<div id=\"" + config.display + "Contents\"></div>");
+
+    $("#" + config.display + "Contents").width(config.displayWidth - 20);
+    $("#" + config.display + "Contents").height(config.height - 20);
+    $("#" + config.display + "Contents").css({
+        "overflow-y": "auto",
+        "overflow-x": "hidden",
     });
 }
 
@@ -199,6 +140,112 @@ function getCharacterEdges(data) {
     }
 
     return edges;
+}
+
+/**
+ * Creates the node and edge objects to use in the network. Also creates a
+ * character lookup table.
+ *
+ * @param {array} characters - The character information.
+ * @param {array} edges - The character co-appearance information.
+ * @return {object} - An object containing the nodes, edges, and character
+ *     lookup table.
+ */
+function getNodesAndEdges(characters, edges) {
+    let count = 0;
+    const charactersTable = [];
+    const nodes = _(edges)
+        .map(row => row.characters)
+        .flatten()
+        .uniq()
+        .map(name => {
+            charactersTable.push(
+                _.filter(characters, r => r.Character === name)[0]
+            );
+
+            charactersTable[count].id = count;
+            charactersTable[count].appearances =_(edges)
+                    .filter(r => r.characters.includes(name))
+                    .map(r => r.comic)
+                    .uniq()
+                    .value()
+                    .join(", ");
+
+            return {
+                id: (count++),
+                label: name,
+                image: "img/" + name + ".png",
+                shape: "image",
+            };
+        })
+        .value();
+
+    const getId = name =>
+        _.filter(nodes, n => n.label === name)[0].id;
+
+    const edgeObjects = _(edges)
+        .uniqBy(row => "" + row.characters)
+        .map(row => {
+            return {
+                from: getId(row.characters[0]),
+                to: getId(row.characters[1]),
+                value: _.filter(
+                    edges,
+                    r => _.isEqual(r.characters, row.characters)
+                ).length,
+            };
+        })
+        .value();
+
+    return {
+        charactersTable: charactersTable,
+        nodes: nodes,
+        edgeObjects: edgeObjects,
+    };
+}
+
+/**
+ * Sets the search bar to work with the visualization.
+ *
+ * @param {object} config - The configuration settings to use.
+ * @param {array} characters - The character information.
+ * @param {array} edges - The character co-appearance information.
+ * @param {array} comicsTable - An array with information on the different
+ *     comics.
+ */
+function activateSearchBar(config, characters, edges, comicsTable) {
+    $(config.searchBar)
+        .search({
+            source: characters.map(r => {
+                // Combine the character's name with their alternate names to
+                // make searching for them easier
+                r.title = r.Character;
+
+                const alternateNames =
+                    r["Alternate Names"].split(",");
+
+                if (alternateNames[0] !== "") {
+                    alternateNames.map(alt => {
+                        r.title += " / " + alt;
+                    });
+                }
+
+                return r;
+            }),
+            onSelect: character => {
+                // Show the selected character in the display window and on the
+                // network
+                const nodeId = character.id;
+
+                displayCharacter(edges, character, comicsTable,
+                    config.display);
+
+                network.setSelection({
+                    nodes: [nodeId],
+                    edges: [],
+                });
+            },
+        });
 }
 
 /**
@@ -338,6 +385,7 @@ const config = {
     container: "characterGraph",
     display: "display",
     progressBar: "progressBar",
+    searchBar: ".ui.search",
     height: $(document).height() - 40,
     width: $(document).width() - 20,
     displayWidth: 300,
