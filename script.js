@@ -214,25 +214,35 @@ function getComicLink(comicsTable, comic) {
 }
 
 /**
- * Displays information on the specified character in the given display.
+ * Returns an HTML representation of the comics that the given character
+ * appeared in.
  *
- * @param {array} edges - The character co-appearance information.
- * @param {object} character - The character to display information about.
- * @param {array} comicsTable - The information on the different comics.
- * @param {string} displayId - The id of the display to put the information in.
+ * @param {object} character - The character to get the appearance information
+ *     of.
+ * @param {array} comicsTable - An array with information on the different
+ *     comics.
+ * @return {string} - An HTML representation of the character's appearances.
  */
-function displayCharacter(edges, character, comicsTable, displayId) {
-    const display = $("#" + displayId + "Contents");
-
-    const appearances = "<h4>Appearances</h4>" + "<p>" +
+function getAppearancesHTML(character, comicsTable) {
+    return "<h4>Appearances</h4>" + "<p>" +
         character.appearances.split(",").map(comic =>
             "<a href=\""+ getComicLink(comicsTable, comic.trim()) + "\">" +
             comic.trim() + "</a>"
         ).join(", ") +
         "</p>";
+}
 
-    console.log(edges);
-
+/**
+ * Returns an HTML representation of the characters that the given character
+ * appeared with.
+ *
+ * @param {array} edges - The character co-appearance information.
+ * @param {object} character - The character to get the costar information of.
+ * @param {array} comicsTable - An array with information on the different
+ *     comics.
+ * @return {string} - An HTML representation of the character's costars.
+ */
+function getAppearedWithHTML(edges, character, comicsTable) {
     const costars = _(edges)
         .filter(e => e.characters.includes(character.Character))
         .map(e => {
@@ -257,13 +267,23 @@ function displayCharacter(edges, character, comicsTable, displayId) {
         .sortBy(["negOccurances", "character"])
         .value();
 
-    const appearedWith = "<h4>Appeared With</h4>" +
+    return "<h4>Appeared With</h4>" +
         costars.map(e =>
             "<p>" + e.character + " (" + e.comics.map(c =>
                 "<a href=\""+ getComicLink(comicsTable, c) + "\">" + c + "</a>"
             ).join(", ") + ")" + "</p>"
         ).join("");
+}
 
+/**
+ * Returns an HTML representation of the alternate titles that the given
+ * character has.
+ *
+ * @param {object} character - The character to get the alternate titles of.
+ * @return {string} - An HTML representation of the character's alternate
+ *     titles.
+ */
+function getAlternateTitlesHTML(character) {
     const alternates =
         _.filter(character["Alternate Names"].split(","), r => r !== "").concat(
             _.filter(
@@ -272,18 +292,39 @@ function displayCharacter(edges, character, comicsTable, displayId) {
             )
         );
 
-    const alternateTitles = (alternates.length === 0)
+    return (alternates.length === 0)
         ? ""
         : "<h4>Alternate Names / Appearances</h4>" +
             alternates.map(name =>
                 "<p>" + name + "</p><img class=\"display-image\" src=\"" +
                 "img/" + name + ".png" + "\">"
             ).join("");
+}
+
+/**
+ * Displays information on the specified character in the given display.
+ *
+ * @param {array} edges - The character co-appearance information.
+ * @param {object} character - The character to display information about.
+ * @param {array} comicsTable - The information on the different comics.
+ * @param {string} displayId - The id of the display to put the information in.
+ */
+function displayCharacter(edges, character, comicsTable, displayId) {
+    const display = $("#" + displayId + "Contents");
+
+    const name =
+        "<h3 class=\"display-title\">" + character.Character + "</h3>";
+
+    const image = "<img class=\"display-image\" src=\"" +
+        "img/" + character.Character + ".png" + "\">";
+
+    const appearances = getAppearancesHTML(character, comicsTable);
+    const alternateTitles = getAlternateTitlesHTML(character);
+    const appearedWith = getAppearedWithHTML(edges, character, comicsTable);
 
     display.html(
-        "<h3 class=\"display-title\">" + character.Character + "</h3>" +
-        "<img class=\"display-image\" src=\"" +
-        "img/" + character.Character + ".png" + "\">" +
+        name +
+        image +
         appearances +
         alternateTitles +
         appearedWith
