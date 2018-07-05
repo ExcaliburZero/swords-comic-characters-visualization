@@ -16,57 +16,11 @@ function main(config) {
                 const { charactersTable, nodes, edgeObjects } =
                     getNodesAndEdges(characters, edges);
 
-                const container = document.getElementById(config.container);
-                const nodesAndEdges = {
-                    nodes: new vis.DataSet(nodes),
-                    edges: new vis.DataSet(edgeObjects),
-                };
-                const options = {
-                    nodes: {
-                        borderWidth: 1,
-                        borderWidthSelected: 20,
-                        color: {
-                            border: "#2B7CE9",
-                        },
-                        shapeProperties: {
-                            useBorderWithImage: true,
-                        },
-                    },
-                    physics: {
-                        stabilization: {
-                            enabled: true,
-                            iterations: 300,
-                            updateInterval: 10,
-                        },
-                    },
-                };
-                const network = new vis.Network(container, nodesAndEdges,
-                    options);
+                const network = createNetwork(config, edges, comicsTable,
+                    charactersTable, nodes, edgeObjects);
 
-                network.on("selectNode", info => {
-                    const nodeId = info.nodes[0];
-                    const character = charactersTable[nodeId];
-
-                    displayCharacter(edges, character, comicsTable,
-                        config.display);
-                });
-
-
-                network.on("stabilizationProgress", function(params) {
-                    const percent = (params.iterations / params.total) * 100;
-                    const percentInt = ("" + percent).split(".")[0];
-
-                    $("#" + config.progressBar)
-                        .text("Loading ... " + percentInt + "%");
-                });
-                network.once("stabilizationIterationsDone", function() {
-                    $("#" + config.progressBar).css({
-                        display: "none",
-                    });
-                    network.setOptions({ physics: false });
-                });
-
-                activateSearchBar(config, characters, edges, comicsTable);
+                activateSearchBar(config, characters, edges, comicsTable,
+                    network);
             });
         });
     });
@@ -204,6 +158,62 @@ function getNodesAndEdges(characters, edges) {
     };
 }
 
+function createNetwork(config, edges, comicsTable, charactersTable, nodes,
+    edgeObjects) {
+    const container = document.getElementById(config.container);
+    const nodesAndEdges = {
+        nodes: new vis.DataSet(nodes),
+        edges: new vis.DataSet(edgeObjects),
+    };
+
+    const options = {
+        nodes: {
+            borderWidth: 1,
+            borderWidthSelected: 20,
+            color: {
+                border: "#2B7CE9",
+            },
+            shapeProperties: {
+                useBorderWithImage: true,
+            },
+        },
+        physics: {
+            stabilization: {
+                enabled: true,
+                iterations: 300,
+                updateInterval: 10,
+            },
+        },
+    };
+    const network = new vis.Network(container, nodesAndEdges,
+        options);
+
+    network.on("selectNode", info => {
+        const nodeId = info.nodes[0];
+        const character = charactersTable[nodeId];
+
+        displayCharacter(edges, character, comicsTable,
+            config.display);
+    });
+
+
+    network.on("stabilizationProgress", function(params) {
+        const percent = (params.iterations / params.total) * 100;
+        const percentInt = ("" + percent).split(".")[0];
+
+        $("#" + config.progressBar)
+            .text("Loading ... " + percentInt + "%");
+    });
+    network.once("stabilizationIterationsDone", function() {
+        $("#" + config.progressBar).css({
+            display: "none",
+        });
+        network.setOptions({ physics: false });
+    });
+
+    return network;
+}
+
 /**
  * Sets the search bar to work with the visualization.
  *
@@ -213,7 +223,7 @@ function getNodesAndEdges(characters, edges) {
  * @param {array} comicsTable - An array with information on the different
  *     comics.
  */
-function activateSearchBar(config, characters, edges, comicsTable) {
+function activateSearchBar(config, characters, edges, comicsTable, network) {
     $(config.searchBar)
         .search({
             source: characters.map(r => {
