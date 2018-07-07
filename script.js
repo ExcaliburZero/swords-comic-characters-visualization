@@ -5,25 +5,26 @@
  *
  * @param {object} config - The configuration settings to use.
  */
-function main(config) {
+async function main(config) {
     setupVisualizationStructure(config);
 
-    d3.csv(config.appearancesFile, appearances => {
-        d3.csv(config.charactersFile, characters => {
-            d3.csv(config.comicsFile, comicsTable => {
-                const edges = getCharacterEdges(appearances);
+    const [appearances, characters, comicsTable] =
+        await Promise.all([
+            d3.csv(config.appearancesFile),
+            d3.csv(config.charactersFile),
+            d3.csv(config.comicsFile),
+        ]);
 
-                const { charactersTable, nodes, edgeObjects } =
-                    getNodesAndEdges(characters, edges);
+    const edges = getCharacterEdges(appearances);
 
-                const network = createNetwork(config, edges, comicsTable,
-                    charactersTable, nodes, edgeObjects);
+    const { charactersTable, nodes, edgeObjects } =
+        getNodesAndEdges(characters, edges);
 
-                activateSearchBar(config, characters, edges, comicsTable,
-                    network);
-            });
-        });
-    });
+    const network = createNetwork(config, edges, comicsTable,
+        charactersTable, nodes, edgeObjects);
+
+    activateSearchBar(config, characters, edges, comicsTable,
+        network);
 }
 
 /**
@@ -172,9 +173,17 @@ function createNetwork(config, edges, comicsTable, charactersTable, nodes,
             borderWidthSelected: 20,
             color: {
                 border: "#2B7CE9",
+                highlight: "#2B7CE9",
             },
             shapeProperties: {
                 useBorderWithImage: true,
+            },
+        },
+        edges: {
+            selectionWidth: (width) => width + 10,
+            color: {
+                color: "#2B7CE9",
+                highlight: "#2ecc71",
             },
         },
         physics: {
